@@ -1,0 +1,27 @@
+Edit from balena host
+balena ssh 1e6bf95.local
+
+mount -o remount,rw /
+systemctl mask serial-getty@serial0.service
+
+vi /mnt/boot/cmdline.txt
+remote serial0 logging
+
+
+RESIN_HOST_CONFIG_dtoverlay pi3-disable-bt
+
+esptool flash_id
+esptool read_flash 0x00000 0x100000 backup.bin # for 1MB flash
+esptool read_flash 0x00000 0x400000 backup.bin # for 4MB flash
+esptool erase_flash
+esptool write_flash -fs 1MB -fm dout 0x0 /firmware/sonoff.bin
+
+
+https://github.com/arendst/Sonoff-Tasmota/wiki/Esptool
+https://blog.hobbytronics.pk/sonoff-original-firmware-backup-restore/
+https://github.com/espressif/esptool
+https://eu.mouser.com/datasheet/2/256/DS18B20-370043.pdf
+https://github.com/arendst/Sonoff-Tasmota/issues/2708
+https://create.arduino.cc/projecthub/TheGadgetBoy/ds18b20-digital-temperature-sensor-and-arduino-9cc806
+https://github.com/arendst/Sonoff-Tasmota/wiki/Sonoff-Basic
+https://github.com/arendst/Sonoff-Tasmota/wiki/Flash-Sonoff-using-Raspberry-Pi
