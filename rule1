@@ -1,0 +1,14 @@
+rule1
+ON ds18b20#temperature DO 
+  backlog
+  var2 %value%;
+  var1 %value%;
+ENDON
+
+
+Rule1
+ON var1#state DO 
+  var2 %value%
+ENDON
+
+Rule1 1

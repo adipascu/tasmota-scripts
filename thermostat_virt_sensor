@@ -1,0 +1,53 @@
+Adapted from https://github.com/arendst/Sonoff-Tasmota/wiki/Rule-Cookbook#thermostat-example
+
+backlog
+SwitchMode1 4;
+Rule 1;
+Rule 4;
+TelePeriod 60;
+SetOption26 1;
+SetOption0 0;
+poweronstate 0;
+mem1 1;
+mem2 22;
+mem3 24;
+
+Rule1
+ON system#boot DO
+  RuleTimer1 70
+ENDON 
+ON event#vbut DO
+  event toggle=%mem1%
+ENDON
+ON event#toggle=0 DO
+  mem1 1
+ENDON
+ON event#toggle!=0 DO
+  mem1 0
+ENDON
+ON Rules#Timer=1 DO
+  backlog 
+  var1 0;
+  RuleTimer1 70;
+  power1 0;
+ENDON
+ON event#temp DO
+  backlog 
+  var1 1;
+  RuleTimer1 70;
+  event sensor_active=1;
+  event temp_demand=%value%;
+ENDON
+ON event#sensor_active>%mem1% DO
+  var1 0
+ENDON
+ON event#temp_demand>%mem3% DO
+  power1 0
+ENDON
+ON event#temp_demand<%mem2% DO
+  power1 %var1%
+ENDON
+
+
+event temp=22
+RuleTimer1 70

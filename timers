@@ -1,0 +1,41 @@
+Timezone 3
+
+rule3 1
+Rule3
+ON Clock#Timer=1 DO
+  backlog 
+  mem4 %mem2%;
+  mem5 %mem3%;
+  mem2 16;
+  mem3 17
+ENDON
+ON Clock#Timer=2 DO 
+  backlog 
+  mem2 %mem4%;
+  mem3 %mem5%
+ENDON
+
+
+
+rule3 1
+Rule3
+ON Clock#Timer=1 DO
+  backlog 
+  var2 %mem4%;
+  mem4 %mem2%;
+  mem2 %var2%;
+  var2 %mem5%;
+  mem5 %mem3%;
+  mem3 %var2%;
+  var2 1
+ENDON
+ON Clock#Timer=2 DO 
+  backlog 
+  var2 %mem4%;
+  mem4 %mem2%;
+  mem2 %var2%;
+  var2 %mem5%;
+  mem5 %mem3%;
+  mem3 %var2%;
+  var2 0
+ENDON

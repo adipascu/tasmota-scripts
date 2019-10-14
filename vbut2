@@ -1,0 +1,10 @@
+Rule1
+ON event#vbut DO
+  event toggle=%mem1%
+ENDON
+ON event#toggle=0 DO
+  mem1 1
+ENDON
+ON event#toggle!=0 DO
+  mem1 0
+ENDON
